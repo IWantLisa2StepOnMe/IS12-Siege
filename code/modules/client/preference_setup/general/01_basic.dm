@@ -33,7 +33,7 @@ datum/preferences
 	var/datum/species/S = all_species[pref.species ? pref.species : SPECIES_HUMAN]
 	if(!S) S = all_species[SPECIES_HUMAN]
 	pref.age                = sanitize_integer(pref.age, S.min_age, S.max_age, initial(pref.age))
-	pref.gender             = sanitize_inlist(pref.gender, S.genders, pick(S.genders))
+	pref.gender             = MALE
 	pref.real_name          = sanitize_name(pref.real_name, pref.species)
 	if(!pref.real_name)
 		pref.real_name      = random_name(pref.gender, pref.species)
@@ -87,18 +87,6 @@ datum/preferences
 	else if(href_list["always_random_name"])
 		pref.be_random_name = !pref.be_random_name
 		return TOPIC_REFRESH
-
-	else if(href_list["gender"])
-		var/new_gender
-		if(pref.gender == MALE)
-			new_gender = FEMALE
-		else
-			new_gender = MALE
-		S = all_species[pref.species]
-		pref.gender = new_gender
-		if(!(pref.f_style in S.get_facial_hair_styles(pref.gender)))
-			ResetFacialHair()
-		return TOPIC_REFRESH_UPDATE_PREVIEW
 
 	else if(href_list["age"])
 		var/new_age = input(user, "Choose your character's age:\n([S.min_age]-[S.max_age])", CHARACTER_PREFERENCE_INPUT_TITLE, pref.age) as num|null
