@@ -100,7 +100,7 @@
 
 /turf/simulated/floor/dirty/New()
 	..()
-	temperature = T0C - 60
+	temperature = T20C
 	//icon_state = pick("snow[rand(1,12)]","snow0")
 	dir = pick(GLOB.alldirs)
 	if(!(locate(/obj/effect/lighting_dummy/daylight) in src) && has_light)
